@@ -1,0 +1,80 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.modal-container {
+    position: fixed;
+    z-index: 1000;
+    width: 100%;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    overflow: auto;
+    backdrop-filter: blur(5px);
+    background-color: v.$secondaryTextColor;
+
+    .modal-content {
+        @include m.flex(column,flex-start,flex-start);
+        padding: 2rem;
+        height: 100%;
+
+        .go-back-container {
+            @include m.flex(row,center,center);
+            cursor: pointer;
+
+            span {
+                margin-left: 1rem;
+            }
+        }
+
+        .modal-header {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-top: 4rem
+        }
+
+        .form {
+            @include m.flex(column,flex-start,flex-start);
+            width: 100%;
+            height: 100%;
+
+            #title,
+            #due-date,
+            select {
+                @include m.borderStyle;
+                border-radius: 0.25rem;
+                width: 100%;
+                padding: 0.5rem 2rem;
+                box-sizing: border-box;
+                margin: 1rem 0;
+                cursor: pointer;
+            }
+
+            textarea {
+                @extend #title;
+                resize: none;
+                width: 100%;
+                height: 5rem;
+                box-sizing: border-box;
+            }
+
+            .submit-task {
+                @include m.borderStyle;
+                border-radius: 0.25rem;
+                width: 100%;
+                padding: 0.5rem 2rem;
+                box-sizing: border-box;
+                margin: 1rem 0;
+                background: none;
+                font-weight: bold;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+@media (min-width: 767px) {
+    .modal-content {
+        max-width: 768px ;
+        margin: 0 auto;
+    }
+}
