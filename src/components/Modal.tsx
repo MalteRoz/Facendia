@@ -16,6 +16,8 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
   //skicka förfrågan till backend -> klar
   //stänga modal
 
+  const [error, setError] = useState<string>("");
+
   const [newTask, setNewTask] = useState<Task>({
     title: "",
     dueDate: "",
@@ -34,9 +36,19 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    console.log("FORMDATA: ", JSON.stringify(newTask, null, 2));
+
     try {
-      const response = await apiServices.post("/add", { newTask });
+      if (
+        !newTask.title ||
+        !newTask.dueDate ||
+        !newTask.description ||
+        !newTask.priority
+      ) {
+        setError("You need to fill in all fields to create a Task!");
+        return;
+      }
+      const response = await apiServices.post("/add", newTask);
+      console.log("TASK ADDED: ", response);
     } catch (error) {
       console.error("POST METHOD FAILED: " + error);
     }
@@ -75,7 +87,12 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
             onChange={handleChange}
           />
           <label htmlFor="priority">Priority:</label>
-          <select id="priority" name="priority" onChange={handleChange}>
+          <select
+            id="priority"
+            name="priority"
+            onChange={handleChange}
+            required
+          >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
@@ -83,6 +100,9 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
           <button type="submit" className="submit-task" onClick={handleSubmit}>
             Submit
           </button>
+          {error && (
+            <p style={{ color: "#FF746C", fontWeight: "bold" }}>{error}</p>
+          )}
         </form>
       </div>
     </div>
