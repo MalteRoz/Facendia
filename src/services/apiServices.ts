@@ -8,7 +8,7 @@ const apiServices = {
     return response.data;
   },
   post: async (endpoint: string, data: any) => {
-    const response = await axios.post(`${URL}${endpoint}`, data);
+    const response = await axios.post(`${BASE_URL}${endpoint}`, data);
     return response.data;
   },
   put: async (endpoint: string, data: any) => {
