@@ -6,9 +6,11 @@ import apiServices from "../services/apiServices";
 
 interface ModalProps {
   onClose: () => void;
+  data: Task[];
+  setData: React.Dispatch<React.SetStateAction<Task[]>>;
 }
 
-const Modal: React.FC<ModalProps> = ({ onClose }) => {
+const Modal: React.FC<ModalProps> = ({ onClose, data, setData }) => {
   //spara data från formuläret - klar
   //onclick på submitknappen - klar
   //skapa interface -> klar
@@ -19,10 +21,12 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
   const [error, setError] = useState<string>("");
 
   const [newTask, setNewTask] = useState<Task>({
+    id: 0,
     title: "",
     dueDate: "",
     description: "",
     priority: "",
+    createdAT: "jibbery",
   });
 
   const handleChange = (
@@ -48,10 +52,12 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
         return;
       }
       const response = await apiServices.post("/add", newTask);
+      setData([...data, response]);
       console.log("TASK ADDED: ", response);
     } catch (error) {
       console.error("POST METHOD FAILED: " + error);
     }
+
     onClose();
   };
 
@@ -93,6 +99,9 @@ const Modal: React.FC<ModalProps> = ({ onClose }) => {
             onChange={handleChange}
             required
           >
+            <option value="" disabled selected>
+              Choose Priority
+            </option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>

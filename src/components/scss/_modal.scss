@@ -58,15 +58,9 @@
             }
 
             .submit-task {
-                @include m.borderStyle;
-                border-radius: 0.25rem;
+                @include m.button(none, black);
                 width: 100%;
-                padding: 0.5rem 2rem;
-                box-sizing: border-box;
-                margin: 1rem 0;
-                background: none;
-                font-weight: bold;
-                cursor: pointer;
+                margin: 1rem 0 ;
             }
         }
     }

@@ -1,0 +1,11 @@
+@use "../../styles/mixins" as m; 
+@use "../../styles/variables" as v; 
+
+
+.add-task-container {
+    @include m.flex(row,center,center);
+    width: 100%;
+    .add-task {
+        @include m.button(white,black);
+    }
+}

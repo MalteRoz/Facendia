@@ -1,0 +1,88 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/variables" as v;
+
+
+.task-container {
+    padding: 1rem 2rem;
+    .task-card {
+        @include m.borderStyle;
+        text-align: start;
+        box-sizing: border-box;
+        width: 100%;
+        margin: 1rem 0 1rem 0;
+        padding: 1rem;
+        border-radius: 0.5rem;
+
+        .upper-task-card {
+            @include m.flex(row,space-between,center);
+            margin-bottom: 0.5rem;
+            
+
+            .due-date-priority {
+                @include m.flex(row,space-evenly,center);
+                
+                p {
+                    font-size: 12px;   
+                    // font-weight: 600;
+                }
+            
+                .date {
+                    text-align: center;
+                    font-size: 0.5rem;
+                    background-color: v.$primaryColor;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 0.5rem;
+                    font-size: 12px;  
+                }
+            
+            
+                .high-prio {
+                    margin-left: 0.5rem;
+                    background-color: v.$highPriority;
+                    padding: 0.25rem 0.75rem;
+                    border-radius: 0.5rem;
+                }
+    
+                .medium-prio {
+                    @extend .high-prio;
+                    background-color: v.$midPriority;
+                }
+    
+                .low-prio {
+                    @extend .high-prio;
+                    background-color: v.$lowPriority;
+                }
+            }
+
+            .icon-container {
+                @include m.flex(row,center,center);
+                gap: 4px;
+            }
+
+
+        }
+
+        .lower-task-card {
+            .title {
+                font-size: 1.25rem;
+                font-weight: 600;
+            }
+
+            .description {
+                
+            }
+        }
+
+        .checked {
+            text-decoration: line-through;
+        }
+    }
+
+    .no-tasks {
+        @include m.flex(column, center,center);
+
+        p {
+            text-align: center;
+        }
+    }
+}

@@ -1,7 +1,7 @@
 @use "./variables" as v;
 
 @mixin borderStyle {
-    border: 1px dashed v.$borderColor;
+    border: 2px dashed v.$borderColor;
 }
 
 @mixin flex ($direction, $justify: center, $align: center){
@@ -9,4 +9,22 @@
     flex-direction: $direction;
     justify-content: $justify;
     align-items: $align;
+}
+
+@mixin button($bgColor, $textColor) {
+    @include borderStyle();
+    background: $bgColor;
+    color: $textColor;
+    padding: 0.5rem 2rem;
+    border-radius: 0.25rem;
+    text-align: center;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+        // background-color: darken($bgColor, 10%);
+    }
 }
