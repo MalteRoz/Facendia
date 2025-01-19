@@ -14,12 +14,10 @@ const DisplayTask = ({
   data: Task[];
   setData: React.Dispatch<React.SetStateAction<Task[]>>;
 }) => {
-  //GET METOD för att hämta sparade tasks från databasen
-  //spara i en variabel av något slag
-  //OM inga hittas visa ett meddelande -> "You have no tasks in progress, get productive!"
-  //mapa igenom svaret och skriv ut kort från datan
-  //styla korten
-  //när en ny task skapas måste allt renderas om
+  //DELETE metod för att ta bort task från DB
+  //göra funktion som hanterar click på soptunnan
+  //apiServices.delete
+  //modal som popar upp och frågar om man verkligen vill ta bort tasken
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,6 +30,17 @@ const DisplayTask = ({
     };
     fetchData();
   }, []);
+
+  const handleDeleteTask = async (id: number) => {
+    console.log(id);
+    try {
+      const response = await apiServices.delete("/delete", { id });
+      console.log(response);
+      setData(data.filter((task) => task.id !== id));
+    } catch (error) {
+      console.error("DELETE METHOD FAILED: " + error);
+    }
+  };
 
   return (
     <div className="task-container">
@@ -51,7 +60,10 @@ const DisplayTask = ({
                   <p className={`${task.priority}-prio`}>{task.priority}</p>
                 </div>
                 <div className="icon-container">
-                  <FaRegTrashCan size={16} />
+                  <FaRegTrashCan
+                    size={16}
+                    onClick={() => handleDeleteTask(task.id)}
+                  />
                   <FaRegCheckCircle size={16} />
                 </div>
               </div>

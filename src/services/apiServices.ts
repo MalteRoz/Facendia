@@ -15,8 +15,8 @@ const apiServices = {
     const response = await axios.put(`${BASE_URL}${endpoint}`, data);
     return response.data;
   },
-  delete: async (endpoint: string) => {
-    const response = await axios.delete(`${BASE_URL}${endpoint}`);
+  delete: async (endpoint: string, params: Record<string, any>) => {
+    const response = await axios.delete(`${BASE_URL}${endpoint}`, { params });
     return response.data;
   },
 };

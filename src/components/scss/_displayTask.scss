@@ -80,7 +80,7 @@
 
     .no-tasks {
         @include m.flex(column, center,center);
-
+        padding: 1rem 0;
         p {
             text-align: center;
         }
