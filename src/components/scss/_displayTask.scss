@@ -4,6 +4,7 @@
 
 .task-container {
     padding: 1rem 2rem;
+    position: relative;
     .task-card {
         @include m.borderStyle;
         text-align: start;
@@ -83,6 +84,49 @@
         padding: 1rem 0;
         p {
             text-align: center;
+        }
+    }
+
+    .overlay {
+        @include m.flex(column, center,center);
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        backdrop-filter: blur(5px); // För blur-effekt
+        background-color: rgba(0, 0, 0, 0.15); // För en mörk overlay
+        z-index: 999; // Lägre än popupens z-index
+
+
+        .popUp-container {
+            @include m.flex(column, center,center);
+            @include m.borderStyle;
+            position: relative;
+            z-index: 1000; // Popupen syns ovanpå overlay
+            width: 90%;
+            height: 20%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: v.$secondaryTextColor;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); // För en snygg popup-effekt
+
+            .popUp-button-container {
+                width: 100%;
+                @include m.flex(row, space-evenly,center);
+                margin-top: 1rem;
+
+                button {
+                    @include m.button(white,black);
+                    padding: 0.5rem 0;
+                    width: 40%;
+                }
+            }
+
+            
         }
     }
 }
