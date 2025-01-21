@@ -1,0 +1,29 @@
+@use "../../styles/mixins" as m;
+@use "../../styles/variables" as v;
+
+.overlay {
+    @include m.flex(column, center,center);
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    backdrop-filter: blur(5px); // För blur-effekt
+    background-color: rgba(0, 0, 0, 0.15); // För en mörk overlay
+    z-index: 999; // Lägre än popupens z-index
+    padding: 2rem;
+
+
+    .popUp-container {
+        @include m.flex(column, center,center);
+        // @include m.borderStyle;
+        width: 100%;
+        position: relative;
+        z-index: 1000; // Popupen syns ovanpå overlay
+        height: 25%;
+        background-color: v.$secondaryTextColor;
+        border-radius: 0.5rem;
+        padding: 1rem;
+        box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2); // För en snygg popup-effekt
+    }
+}

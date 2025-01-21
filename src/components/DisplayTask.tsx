@@ -5,6 +5,7 @@ import "./scss/_displayTask.scss";
 import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { HiMiniArrowDown } from "react-icons/hi2";
+import PopUp from "./PopUp";
 
 const DisplayTask = ({
   data,
@@ -15,7 +16,6 @@ const DisplayTask = ({
 }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
-  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -61,6 +61,10 @@ const DisplayTask = ({
     } catch (error) {
       console.error("PUT METHOD FAILED: " + error);
     }
+  };
+
+  const closePopUp = () => {
+    setShowPopUp(false);
   };
 
   return (
@@ -125,33 +129,26 @@ const DisplayTask = ({
             </div>
           ))}
 
-          {showPopUp && (
-            <div className="overlay">
-              <div className="popUp-container">
-                <p>
-                  Do you want to{" "}
-                  <span style={{ color: "red", fontWeight: "600" }}>
-                    delete
-                  </span>{" "}
-                  this task?
-                </p>
-                <div className="popUp-button-container">
-                  <button
-                    onClick={() => {
-                      if (selectedTaskId !== null) {
-                        handleDeleteTask(selectedTaskId);
-                      }
-                      setSelectedTaskId("");
-                      setShowPopUp(false);
-                    }}
-                  >
-                    Yes
-                  </button>
-                  <button onClick={() => setShowPopUp(false)}>No, close</button>
-                </div>
-              </div>
+          <PopUp isVisible={showPopUp} onClose={closePopUp}>
+            <p className="popUp-text">
+              Do you want to{" "}
+              <span style={{ color: "red", fontWeight: "600" }}>delete</span>{" "}
+              this task?
+            </p>
+            <div className="popUp-button-container">
+              <button
+                onClick={() => {
+                  if (selectedTaskId !== null) {
+                    handleDeleteTask(selectedTaskId);
+                  }
+                  closePopUp();
+                }}
+              >
+                Yes
+              </button>
+              <button onClick={() => closePopUp()}>No, close</button>
             </div>
-          )}
+          </PopUp>
         </div>
       )}
     </div>
