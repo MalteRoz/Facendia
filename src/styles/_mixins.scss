@@ -1,7 +1,7 @@
 @use "./variables" as v;
 
 @mixin borderStyle {
-    border: 2px dashed v.$borderColor;
+    border: 1.5px dashed v.$borderColor;
 }
 
 @mixin flex ($direction, $justify: center, $align: center){

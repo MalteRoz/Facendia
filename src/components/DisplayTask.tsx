@@ -13,15 +13,9 @@ const DisplayTask = ({
   data: Task[];
   setData: React.Dispatch<React.SetStateAction<Task[]>>;
 }) => {
-  //DELETE metod för att ta bort task från DB
-  //göra funktion som hanterar click på soptunnan -> klar
-  //apiServices.delete -> klar
-  //modal som popar upp och frågar om man verkligen vill ta bort tasken
-  //useState som kontrollerar ifall showModal är true eller inte -> klar
-  //visar popUpmodal
-
   const [showPopUp, setShowPopUp] = useState(false);
-  const [selectedTaskId, setSelectedTaskId] = useState<number | null>(null);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+  const [completed, setCompleted] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,12 +29,13 @@ const DisplayTask = ({
     fetchData();
   }, []);
 
-  const handleDeleteCheck = (id: number) => {
-    setShowPopUp(true);
+  const handleDeleteCheck = (id: string) => {
+    console.log("Detta är id: ", id);
     setSelectedTaskId(id);
+    setShowPopUp(true);
   };
 
-  const handleDeleteTask = async (id: number) => {
+  const handleDeleteTask = async (id: string) => {
     console.log(id);
     try {
       const response = await apiServices.delete("/delete", { id });
@@ -49,6 +44,11 @@ const DisplayTask = ({
     } catch (error) {
       console.error("DELETE METHOD FAILED: " + error);
     }
+  };
+
+  const handleCompletedTask = () => {
+    console.log("test");
+    setCompleted(!completed);
   };
 
   return (
@@ -65,15 +65,19 @@ const DisplayTask = ({
             <div key={index} className="task-card">
               <div className="upper-task-card">
                 <div className="due-date-priority">
-                  <p className="date">Due {task.dueDate}</p>
-                  <p className={`${task.priority}-prio`}>{task.priority}</p>
+                  <p className={completed ? "completed date" : "date"}>
+                    Due {task.dueDate}
+                  </p>
+                  <p className={`${task.priority}-prio`}>
+                    {task.priority} prio
+                  </p>
                 </div>
                 <div className="icon-container">
                   <FaRegTrashCan
                     size={16}
                     onClick={() => handleDeleteCheck(task.id)}
                   />
-                  <FaRegCheckCircle size={16} />
+                  <FaRegCheckCircle size={16} onClick={handleCompletedTask} />
                 </div>
               </div>
               <div className="lower-task-card">
@@ -97,9 +101,10 @@ const DisplayTask = ({
                   <button
                     onClick={() => {
                       if (selectedTaskId !== null) {
+                        console.log(selectedTaskId);
                         handleDeleteTask(selectedTaskId);
                       }
-                      setSelectedTaskId(0);
+                      setSelectedTaskId("");
                       setShowPopUp(false);
                     }}
                   >

@@ -21,7 +21,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, data, setData }) => {
   const [error, setError] = useState<string>("");
 
   const [newTask, setNewTask] = useState<Task>({
-    id: 0,
+    id: "",
     title: "",
     dueDate: "",
     description: "",
@@ -52,7 +52,9 @@ const Modal: React.FC<ModalProps> = ({ onClose, data, setData }) => {
         return;
       }
       const response = await apiServices.post("/add", newTask);
-      setData([...data, response]);
+      const updateData = await apiServices.get("/");
+      setData(updateData);
+
       console.log("TASK ADDED: ", response);
     } catch (error) {
       console.error("POST METHOD FAILED: " + error);
