@@ -21,6 +21,7 @@ const DisplayTask = ({
     const fetchData = async () => {
       try {
         const response = await apiServices.get("/");
+        console.log("API Response:", response);
         setData(response);
       } catch (error) {
         console.error("GET METHOD FAILED: " + error);
@@ -30,13 +31,11 @@ const DisplayTask = ({
   }, []);
 
   const handleDeleteCheck = (id: string) => {
-    console.log("Detta är id: ", id);
     setSelectedTaskId(id);
     setShowPopUp(true);
   };
 
   const handleDeleteTask = async (id: string) => {
-    console.log(id);
     try {
       const response = await apiServices.delete("/delete", { id });
       console.log(response);
@@ -46,9 +45,22 @@ const DisplayTask = ({
     }
   };
 
-  const handleCompletedTask = () => {
-    console.log("test");
-    setCompleted(!completed);
+  const handleCompletedTask = async (taskId: string, currentState: boolean) => {
+    try {
+      const newState = !currentState;
+      const response = await apiServices.put("/task-status", {
+        id: taskId,
+        completed: newState,
+      });
+
+      setData((prevData) =>
+        prevData.map((task) =>
+          task.id === taskId ? { ...task, completed: newState } : task
+        )
+      );
+    } catch (error) {
+      console.error("PUT METHOD FAILED: " + error);
+    }
   };
 
   return (
@@ -56,7 +68,6 @@ const DisplayTask = ({
       {data.length === 0 ? (
         <div className="no-tasks">
           <p>You have no tasks in progress, get productive!</p>
-          {/* <IoIosArrowDown /> */}
           <HiMiniArrowDown size={20} style={{ marginTop: "1rem" }} />
         </div>
       ) : (
@@ -65,10 +76,20 @@ const DisplayTask = ({
             <div key={index} className="task-card">
               <div className="upper-task-card">
                 <div className="due-date-priority">
-                  <p className={completed ? "completed date" : "date"}>
+                  <p
+                    className={
+                      task.completed === true ? "completed date" : "date"
+                    }
+                  >
                     Due {task.dueDate}
                   </p>
-                  <p className={`${task.priority}-prio`}>
+                  <p
+                    className={
+                      task.completed === true
+                        ? `completed ${task.priority}-prio`
+                        : `${task.priority}-prio`
+                    }
+                  >
                     {task.priority} prio
                   </p>
                 </div>
@@ -77,12 +98,29 @@ const DisplayTask = ({
                     size={16}
                     onClick={() => handleDeleteCheck(task.id)}
                   />
-                  <FaRegCheckCircle size={16} onClick={handleCompletedTask} />
+                  <FaRegCheckCircle
+                    size={16}
+                    onClick={() => handleCompletedTask(task.id, task.completed)}
+                  />
                 </div>
               </div>
               <div className="lower-task-card">
-                <p className="title">{task.title}</p>
-                <p className="description">{task.description}</p>
+                <p
+                  className={
+                    task.completed === true ? "completed title" : "title"
+                  }
+                >
+                  {task.title}
+                </p>
+                <p
+                  className={
+                    task.completed === true
+                      ? "completed description"
+                      : "description"
+                  }
+                >
+                  {task.description}
+                </p>
               </div>
             </div>
           ))}
@@ -101,7 +139,6 @@ const DisplayTask = ({
                   <button
                     onClick={() => {
                       if (selectedTaskId !== null) {
-                        console.log(selectedTaskId);
                         handleDeleteTask(selectedTaskId);
                       }
                       setSelectedTaskId("");

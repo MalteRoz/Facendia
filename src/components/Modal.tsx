@@ -26,6 +26,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, data, setData }) => {
     dueDate: "",
     description: "",
     priority: "",
+    completed: false,
     createdAT: "jibbery",
   });
 
