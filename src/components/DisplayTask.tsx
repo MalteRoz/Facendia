@@ -6,6 +6,7 @@ import { FaRegTrashCan } from "react-icons/fa6";
 import { FaRegCheckCircle } from "react-icons/fa";
 import { HiMiniArrowDown } from "react-icons/hi2";
 import PopUp from "./PopUp";
+import TaskModal from "./TaskModal";
 
 const DisplayTask = ({
   data,
@@ -16,6 +17,8 @@ const DisplayTask = ({
 }) => {
   const [showPopUp, setShowPopUp] = useState(false);
   const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+  const [selectedTask, setSelectedTask] = useState<Task | null>(null);
+  const [showTask, setShowTask] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -63,10 +66,14 @@ const DisplayTask = ({
     }
   };
 
-  const closePopUp = () => {
-    setShowPopUp(false);
-  };
+  const closePopUp = () => setShowPopUp(false);
 
+  const closeTaskModal = () => setShowTask(false);
+
+  const openTaskModal = (task: Task) => {
+    setSelectedTask(task);
+    setShowTask(true);
+  };
   return (
     <div className="task-container">
       {data.length === 0 ? (
@@ -77,7 +84,11 @@ const DisplayTask = ({
       ) : (
         <div>
           {data.map((task, index) => (
-            <div key={index} className="task-card">
+            <div
+              key={index}
+              className="task-card"
+              onClick={() => openTaskModal(task)}
+            >
               <div className="upper-task-card">
                 <div className="due-date-priority">
                   <p
@@ -149,6 +160,10 @@ const DisplayTask = ({
               <button onClick={() => closePopUp()}>No, close</button>
             </div>
           </PopUp>
+
+          {showTask && selectedTask && (
+            <TaskModal onClose={closeTaskModal} task={selectedTask}></TaskModal>
+          )}
         </div>
       )}
     </div>

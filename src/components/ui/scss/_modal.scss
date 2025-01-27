@@ -1,0 +1,53 @@
+@keyframes slideInFromRight {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideOutToRight {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+
+
+.modal-component-container {
+    display: flex;
+    justify-content: flex-end; /* För att placera modalen till höger */
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    opacity: 0;
+    z-index: 1000; 
+    transition: opacity 0.3s;
+
+    &.active {
+        opacity: 1;
+    }
+
+
+    .modal-component-content {
+        width: 100%;
+        height: 100%;
+        animation: slideInFromRight 0.3s ease forwards;
+        background-color: white;
+        padding: 2rem;
+    }
+}
+
+.modal-component-container.closing .modal-component-content {
+    animation: slideOutToRight 0.3s ease forwards;
+}

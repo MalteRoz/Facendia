@@ -1,0 +1,11 @@
+@use "../../../styles/mixins" as m;
+@use "../../../styles/variables" as v;
+
+
+.go-back-container {
+    @include m.flex(row, flex-start , center);
+
+    span {
+        margin-left: 0.5rem;
+    }
+}

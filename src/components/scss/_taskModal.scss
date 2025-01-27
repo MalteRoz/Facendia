@@ -1,0 +1,79 @@
+@use "../../styles/mixins" as m; 
+@use "../../styles/variables" as v; 
+
+.task-modal-container {
+
+    .task-modal-title {
+        margin-top: 2rem;
+        font-size: 1.25rem;
+        font-weight: bold;
+    }
+
+    .task-modal-content {
+        @include m.flex(column,space-between,center);
+        border-bottom: 1.5px dashed v.$borderColor;
+        padding: 2rem 0 2rem 0; 
+        position: relative;
+    
+            div {
+                @include m.flex(row,flex-start,center);
+                width: 100%;
+                padding: 0.5rem 0;
+            }
+
+            .label {
+                width: 50%;
+            }
+
+            .high-prio {
+                @include m.priority(high);
+                margin: 0;
+            }
+
+            .medium-prio {
+                @include m.priority(medium);
+                margin: 0;
+            }
+
+            .low-prio {
+                @include m.priority(low);
+                margin: 0;
+            }
+
+            .date {
+                @include m.dueDate;
+                font-size: 1rem;
+            }
+            
+            .custom-dropdown {
+                width: 50%;
+                .dropdown-menu {
+                    @include m.borderStyle();
+                    position: absolute;
+                    background-color: white;
+                    margin-top: 8rem;
+                    list-style: none;
+                    padding: 0.5rem 0.5rem;
+                }  
+            }
+
+            
+    }
+
+    .task-modal-desc-container {
+        padding: 2rem 0;
+
+        textarea {
+            width: 100%;
+            resize: none;
+            border: none;
+            min-height: 100px;
+            font-size: 1rem;
+        }
+    }
+
+   .submit {
+        @include m.button(white,black);
+        width: 100%;
+    }
+}

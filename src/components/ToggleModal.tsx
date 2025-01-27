@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import Modal from "./Modal";
+import Modal from "./AddTaskModal";
 import { Task } from "../models/ITask";
 import "./scss/_toggleNavBar.scss";
 

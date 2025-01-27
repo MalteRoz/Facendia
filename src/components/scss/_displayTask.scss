@@ -43,20 +43,15 @@
             
             
                 .high-prio {
-                    margin-left: 0.5rem;
-                    background-color: v.$highPriority;
-                    padding: 0.25rem 0.75rem;
-                    border-radius: 0.5rem;
+                    @include m.priority(high);
                 }
     
                 .medium-prio {
-                    @extend .high-prio;
-                    background-color: v.$midPriority;
+                    @include m.priority(medium);
                 }
     
                 .low-prio {
-                    @extend .high-prio;
-                    background-color: v.$lowPriority;
+                    @include m.priority(low);
                 }
             }
 

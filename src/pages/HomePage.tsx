@@ -5,11 +5,6 @@ import DisplayTask from "../components/DisplayTask";
 import { Task } from "../models/ITask";
 
 const HomePage = () => {
-  //setData här
-  //skicka setData till DisplayTask -> klar
-  //skicka setData till ToggleModal -> klar
-  //ToggleModal skickar Modal -> klar
-
   const [data, setData] = useState<Task[]>([]);
 
   return (

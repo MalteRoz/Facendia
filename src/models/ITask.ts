@@ -5,7 +5,7 @@ export interface Task {
   description: string;
   priority: string;
   completed: boolean;
-  createdAT: string;
+  createdAt: string;
 }
 
 //ändra interface så att completed är med ->

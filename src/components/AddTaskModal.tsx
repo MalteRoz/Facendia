@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { IoChevronBackOutline } from "react-icons/io5";
-import "./scss/_modal.scss";
+import "./scss/_addTaskModal.scss";
 import { Task } from "../models/ITask";
 import apiServices from "../services/apiServices";
 
@@ -27,7 +27,7 @@ const Modal: React.FC<ModalProps> = ({ onClose, data, setData }) => {
     description: "",
     priority: "",
     completed: false,
-    createdAT: "jibbery",
+    createdAt: "jibbery",
   });
 
   const handleChange = (

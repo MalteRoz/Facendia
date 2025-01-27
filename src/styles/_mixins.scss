@@ -28,3 +28,31 @@
         // background-color: darken($bgColor, 10%);
     }
 }
+
+@mixin priority($priority) {
+    @if $priority == low {
+        margin-left: 0.5rem;
+        background-color: v.$lowPriority;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.5rem;
+    } @else if ($priority == medium) {
+        margin-left: 0.5rem;
+        background-color: v.$midPriority;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.5rem;
+    } @else if ($priority == high) {
+        margin-left: 0.5rem;
+        background-color: v.$highPriority;
+        padding: 0.25rem 0.75rem;
+        border-radius: 0.5rem;
+    }
+}
+
+@mixin dueDate {
+        text-align: center;
+        font-size: 0.5rem;
+        background-color: v.$primaryColor;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.5rem;
+        font-size: 12px;  
+}
